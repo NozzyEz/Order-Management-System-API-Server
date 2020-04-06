@@ -3,7 +3,7 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
     
-    # Field to return all users
+    # Fields to retrieve lists of users and posts
     field :users, [Types::UserType], null: false
     field :posts, [Types::PostType], null: false
     
@@ -16,7 +16,9 @@ module Types
       argument :id, Integer, required: true
     end
 
-    # Method to fetch all users
+    # TODO make queries for finding users and posts by other fields than their id
+
+    #! Method to fetch all users
     def users
       User.all
     end
