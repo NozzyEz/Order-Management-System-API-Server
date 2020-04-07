@@ -7,7 +7,14 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 5.times do
-    user = User.create(name: Faker::Name.name, email: Faker::Internet.email)
+    user = User.new
+    user.username = Faker::Internet.username 
+    user.first_name = Faker::Name.first_name 
+    user.last_name = Faker::Name.last_name 
+    user.email = Faker::Internet.email
+    user.password = 'valid_password'
+    user.password_confirmation = 'valid_password'
+    user.save
     5.times do
         user.posts.create(title: Faker::Lorem.sentence(word_count: 3), 
         body: Faker::Lorem.paragraph(sentence_count: 3))
