@@ -13,6 +13,10 @@ gem 'puma', '~> 4.1'
 # Graphql API
 gem 'graphql', '~> 1.10', '>= 1.10.5'
 
+# Devise user authentication
+gem 'devise', '~> 4.7', '>= 4.7.1'
+gem 'devise-token_authenticatable', '~> 1.1'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
