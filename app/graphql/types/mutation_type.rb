@@ -5,6 +5,7 @@ module Types
     field :create_post, mutation: Mutations::CreatePost
 
     # TODO Updating mutations
+    field :update_post, mutation: Mutations::UpdatePost
 
 
     # TODO deletion mutations
