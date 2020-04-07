@@ -4,11 +4,13 @@ module Types
     field :create_user, mutation: Mutations::CreateUser
     field :create_post, mutation: Mutations::CreatePost
 
-    # TODO Updating mutations
+    # Updating mutations
+    field :update_user, mutation: Mutations::UpdateUser
     field :update_post, mutation: Mutations::UpdatePost
 
 
-    # TODO deletion mutations
+    # deletion mutations
+    field :destroy_user, mutation: Mutations::DestroyUser
     field :destroy_post, mutation: Mutations::DestroyPost
   end
 end
