@@ -9,5 +9,6 @@ module Types
 
 
     # TODO deletion mutations
+    field :destroy_post, mutation: Mutations::DestroyPost
   end
 end
