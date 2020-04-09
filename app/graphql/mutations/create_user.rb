@@ -11,7 +11,7 @@ class Mutations::CreateUser < Mutations::BaseMutation
     field :user, Types::UserType, null: false
     field :errors, [String], null: true
 
-    # The resolve method runs when the CreateUser mutation is queried, and takes the arguments
+    # The resolve method runs when the CreateUser mutation is queried, takes the arguments
     # and will then store these in the fields by invoking the new() method from the user model
     def resolve(username:, email:, first_name:, last_name:, password:, password_confirmation:)
         user = User.new(
