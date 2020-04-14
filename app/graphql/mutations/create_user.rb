@@ -1,11 +1,12 @@
 class Mutations::CreateUser < Mutations::BaseMutation
     # Specifying the arguments we take
-    argument :username,                 String, required: true
-    argument :email,                    String, required: true
-    argument :first_name,               String, required: true
-    argument :last_name,                String, required: true
-    argument :password,                 String, required: true
-    argument :password_confirmation,    String, required: true
+    argument :username,                 String,     required: true
+    argument :email,                    String,     required: true
+    argument :first_name,               String,     required: true
+    argument :last_name,                String,     required: true
+    argument :password,                 String,     required: true
+    argument :password_confirmation,    String,     required: true
+    argument :org_id,                   Integer,    required: true
 
     # Specifying the fields to save to
     field :user, Types::UserType, null: false
@@ -13,10 +14,11 @@ class Mutations::CreateUser < Mutations::BaseMutation
 
     # The resolve method runs when the CreateUser mutation is queried, takes the arguments
     # and will then store these in the fields by invoking the new() method from the user model
-    def resolve(username:, email:, first_name:, last_name:, password:, password_confirmation:)
+    def resolve(username:, email:, org_id:, first_name:, last_name:, password:, password_confirmation:)
         user = User.new(
-            username: username, 
+            username: username,
             email: email, 
+            org_id: org_id,
             first_name: first_name, 
             last_name: last_name,
             password: password,
