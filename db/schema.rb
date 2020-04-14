@@ -35,14 +35,14 @@ ActiveRecord::Schema.define(version: 2020_04_14_143610) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "posts", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "title"
-    t.text "body"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_posts_on_user_id"
-  end
+  # create_table "posts", force: :cascade do |t|
+  #   t.bigint "user_id", null: false
+  #   t.string "title"
+  #   t.text "body"
+  #   t.datetime "created_at", precision: 6, null: false
+  #   t.datetime "updated_at", precision: 6, null: false
+  #   t.index ["user_id"], name: "index_posts_on_user_id"
+  # end
 
   create_table "products", force: :cascade do |t|
     t.string "name"
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 2020_04_14_143610) do
 
   add_foreign_key "orders", "organizations"
   add_foreign_key "orders", "users"
-  add_foreign_key "posts", "users"
+  # add_foreign_key "posts", "users"
   add_foreign_key "products", "organizations"
   add_foreign_key "users", "organizations"
 end
