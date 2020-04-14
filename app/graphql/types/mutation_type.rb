@@ -1,5 +1,9 @@
 module Types
   class MutationType < Types::BaseObject
+
+    # TODO: Create fields for organizations, orders and products 
+    # TODO: Remove fields for posts
+
     # Creation mutations
     field :create_user, mutation: Mutations::CreateUser
     field :create_post, mutation: Mutations::CreatePost

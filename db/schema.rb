@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_14_105620) do
+ActiveRecord::Schema.define(version: 2020_04_14_133737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "organizations", force: :cascade do |t|
+    t.string "name"
+    t.string "verification_code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "posts", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -37,10 +44,12 @@ ActiveRecord::Schema.define(version: 2020_04_14_105620) do
     t.datetime "remember_created_at"
     t.text "authentication_token"
     t.datetime "authentication_token_created_at"
-    t.integer "org_id"
+    t.bigint "organization_id"
     t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
+    t.index ["organization_id"], name: "index_users_on_organization_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "posts", "users"
+  add_foreign_key "users", "organizations"
 end
