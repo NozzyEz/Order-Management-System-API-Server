@@ -5,10 +5,15 @@ module Types
     
     # Fields to retrieve lists of users and posts
     field :users, [Types::UserType], null: false
+    field :organizations, [Types::OrganizationType], null: false
     # field :posts, [Types::PostType], null: false
     
     # field to return specific user with the provided user id
     field :user, Types::UserType, null: false do
+      argument :id, ID, required: true
+    end
+
+    field :organization, Types::OrganizationType, null: false do
       argument :id, ID, required: true
     end
     
@@ -22,17 +27,17 @@ module Types
     def users
       User.all
     end
-    # def posts
-    #   Post.all
-    # end
+    def organizations
+      Organization.all
+    end
 
     # fetch a user with a user id
     def user(id:)
       User.find(id)
     end
 
-    # def post(id:)
-    #   Post.find(id)
-    # end
+    def organization(id:)
+      Organization.find(id)
+    end
   end
 end

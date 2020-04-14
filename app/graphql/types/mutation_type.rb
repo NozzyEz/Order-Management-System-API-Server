@@ -6,15 +6,18 @@ module Types
 
     # Creation mutations
     field :create_user, mutation: Mutations::CreateUser
+    field :create_organization, mutation: Mutations::CreateOrganization
     # field :create_post, mutation: Mutations::CreatePost
 
     # Updating mutations
     field :update_user, mutation: Mutations::UpdateUser
+    field :update_organization, mutation: Mutations::UpdateOrganization
     # field :update_post, mutation: Mutations::UpdatePost
 
 
     # deletion mutations
     field :destroy_user, mutation: Mutations::DestroyUser
+    field :destroy_organization, mutation: Mutations::DestroyOrganization
     # field :destroy_post, mutation: Mutations::DestroyPost
   end
 end
