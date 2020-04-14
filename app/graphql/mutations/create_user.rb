@@ -6,7 +6,7 @@ class Mutations::CreateUser < Mutations::BaseMutation
     argument :last_name,                String,     required: true
     argument :password,                 String,     required: true
     argument :password_confirmation,    String,     required: true
-    argument :org_id,                   Integer,    required: true
+    argument :organization_id,          Integer,    required: true
 
     # Specifying the fields to save to
     field :user, Types::UserType, null: false

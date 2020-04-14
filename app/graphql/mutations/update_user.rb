@@ -1,11 +1,11 @@
 class Mutations::UpdateUser < Mutations::BaseMutation
     # Arguments
-    argument :id,                       Integer,    required: true
-    argument :username,                 String,     required: false
-    argument :email,                    String,     required: false
-    argument :first_name,               String,     required: false
-    argument :last_name,                String,     required: false
-    argument :org_id,                   Integer,    required: false
+    argument :id,               Integer,    required: true
+    argument :username,         String,     required: false
+    argument :email,            String,     required: false
+    argument :first_name,       String,     required: false
+    argument :last_name,        String,     required: false
+    argument :organization_id,  Integer,    required: false
 
     # Fields
     field :user,    Types::UserType,    null: true
@@ -18,7 +18,7 @@ class Mutations::UpdateUser < Mutations::BaseMutation
         if user.update(attributes)
             {user: user, errors: []}
         else
-            {user: nil, errors: post.errors.full_messages}
+            {user: nil, errors: user.errors.full_messages}
         end
     end
 end
