@@ -4,15 +4,19 @@ module Types
     # They will be entry points for queries on your schema.
     
     # Fields to retrieve lists of users and posts
-    field :users, [Types::UserType], null: false
-    field :organizations, [Types::OrganizationType], null: false
-    
+    field :users,         [Types::UserType],          null: false
+    field :organizations, [Types::OrganizationType],  null: false
+    field :products,      [Types::ProductType],       null: false
     
     field :user, Types::UserType, null: false do
       argument :id, ID, required: true
     end
 
     field :organization, Types::OrganizationType, null: false do
+      argument :id, ID, required: true
+    end
+
+    field :product, Types::ProductType, null: false do
       argument :id, ID, required: true
     end
     
@@ -26,6 +30,10 @@ module Types
       Organization.all
     end
 
+    def products
+      Product.all
+    end
+
     # fetch a specific items of a type by their id
     def user(id:)
       User.find(id)
@@ -34,5 +42,10 @@ module Types
     def organization(id:)
       Organization.find(id)
     end
+
+    def product(id:)
+      Product.find(id)
+    end
+
   end
 end
