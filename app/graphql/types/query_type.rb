@@ -7,6 +7,7 @@ module Types
     field :users,         [Types::UserType],          null: false
     field :organizations, [Types::OrganizationType],  null: false
     field :products,      [Types::ProductType],       null: false
+    field :orders,        [Types::OrderType],         null: false
     
     field :user, Types::UserType, null: false do
       argument :id, ID, required: true
@@ -20,6 +21,9 @@ module Types
       argument :id, ID, required: true
     end
     
+    field :orders, Types::OrderType, null: false do
+      argument :id, ID, required: true
+    end
 
     # Methods to fetch lists of each type
     def users
@@ -34,6 +38,10 @@ module Types
       Product.all
     end
 
+    def orders
+      Order.all
+    end
+
     # fetch a specific items of a type by their id
     def user(id:)
       User.find(id)
@@ -46,6 +54,9 @@ module Types
     def product(id:)
       Product.find(id)
     end
-
+    
+    def order(id:)
+      Order.find(id)
+    end
   end
 end
