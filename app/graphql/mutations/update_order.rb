@@ -1,13 +1,13 @@
 class Mutations::UpdateOrder < Mutations::BaseMutation
     # Arguments
-    argument :id,               ID,                      null: true
-    argument :organization_id,  Integer,                 null: false
-    argument :user_id,          Integer,                 null: false
-    argument :paid,             Integer,                 null: false
-    argument :cost,             Integer,                 null: false
-    argument :payment_type,     String,                  null: false
-    argument :status,           String,                  null: false
-    argument :products,         [Types::ProductType],    null: false
+    argument :id,               ID,                      required: true
+    argument :organization_id,  Integer,                 required: false
+    argument :user_id,          Integer,                 required: false
+    argument :paid,             Integer,                 required: false
+    argument :cost,             Integer,                 required: false
+    argument :payment_type,     String,                  required: false
+    argument :status,           String,                  required: false
+    # argument :products,         [Types::ProductType],    required: false
 
 
     # Fields

@@ -1,15 +1,15 @@
 class Mutations::CreateOrder < Mutations::BaseMutation
-    argument :id,               ID,                      null: false
-    argument :organization_id,  Integer,                 null: false
-    argument :user_id,          Integer,                 null: false
-    argument :paid,             Integer,                 null: false
-    argument :cost,             Integer,                 null: false
-    argument :payment_type,     String,                  null: false
-    argument :status,           String,                  null: false
-    argument :products,         [Types::ProductType],    null: false
+    argument :id,               ID,                      required: true
+    argument :organization_id,  Integer,                 required: true
+    argument :user_id,          Integer,                 required: true
+    argument :paid,             Integer,                 required: false
+    argument :cost,             Integer,                 required: true
+    argument :payment_type,     String,                  required: true
+    argument :status,           String,                  required: false
+    # argument :products,         [Types::ProductType],    required: true
 
-    field :order,    Types::OrderType,      null: false
-    field :errors,     [String],            null: true
+    field :order,       Types::OrderType,      null: false
+    field :errors,      [String],              null: true
 
     def resolve(**attributes)
         order = Order.new(attributes)
