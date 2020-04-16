@@ -21,7 +21,7 @@ module Types
       argument :id, ID, required: true
     end
     
-    field :orders, Types::OrderType, null: false do
+    field :order, Types::OrderType, null: false do
       argument :id, ID, required: true
     end
 

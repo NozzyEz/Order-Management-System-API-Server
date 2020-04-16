@@ -7,7 +7,7 @@ class Mutations::UpdateOrder < Mutations::BaseMutation
     argument :cost,             Integer,                 required: false
     argument :payment_type,     String,                  required: false
     argument :status,           String,                  required: false
-    # argument :products,         [Types::ProductType],    required: false
+    argument :product_ids,      [ID],                    required: false
 
 
     # Fields

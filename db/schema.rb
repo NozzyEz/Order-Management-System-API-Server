@@ -29,12 +29,12 @@ ActiveRecord::Schema.define(version: 2020_04_14_145700) do
   end
 
   create_table "orders_products", force: :cascade do |t|
-    t.bigint "orders_id", null: false
-    t.bigint "products_id", null: false
+    t.bigint "order_id", null: false
+    t.bigint "product_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["orders_id"], name: "index_orders_products_on_orders_id"
-    t.index ["products_id"], name: "index_orders_products_on_products_id"
+    t.index ["order_id"], name: "index_orders_products_on_order_id"
+    t.index ["product_id"], name: "index_orders_products_on_product_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -76,8 +76,8 @@ ActiveRecord::Schema.define(version: 2020_04_14_145700) do
 
   add_foreign_key "orders", "organizations"
   add_foreign_key "orders", "users"
-  add_foreign_key "orders_products", "orders", column: "orders_id"
-  add_foreign_key "orders_products", "products", column: "products_id"
+  add_foreign_key "orders_products", "orders"
+  add_foreign_key "orders_products", "products"
   add_foreign_key "products", "organizations"
   add_foreign_key "users", "organizations"
 end

@@ -12,6 +12,8 @@ gem 'puma', '~> 4.1'
 
 # Graphql API
 gem 'graphql', '~> 1.10', '>= 1.10.5'
+gem 'graphql-errors', '~> 0.4.0'
+gem 'pry-rails', :group => :development
 
 # Devise user authentication
 gem 'devise', '~> 4.7', '>= 4.7.1'
