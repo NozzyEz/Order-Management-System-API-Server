@@ -20,8 +20,6 @@ ActiveRecord::Schema.define(version: 2020_04_14_145700) do
     t.bigint "user_id", null: false
     # TODO Change 'Paid' to Boolean
     t.integer "paid"
-    # TODO Remove 'Cost'
-    t.integer "cost"
     t.string "status"
     t.string "payment_type"
     t.datetime "created_at", precision: 6, null: false
