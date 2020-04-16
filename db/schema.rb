@@ -18,7 +18,9 @@ ActiveRecord::Schema.define(version: 2020_04_14_145700) do
   create_table "orders", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.bigint "user_id", null: false
+    # TODO Change 'Paid' to Boolean
     t.integer "paid"
+    # TODO Remove 'Cost'
     t.integer "cost"
     t.string "status"
     t.string "payment_type"

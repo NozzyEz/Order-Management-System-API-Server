@@ -4,6 +4,8 @@ module Types
     field :username,          String,                     null: true
     field :organization_id,   Integer,                    null: true
     field :organization,      Types::OrganizationType,    null: true
+    field :order_ids,         [Integer],                  null: true
+    field :orders,            [Types::OrderType],         null: true
     field :first_name,        String,                     null: true
     field :last_name,         String,                     null: true
     field :email,             String,                     null: true
