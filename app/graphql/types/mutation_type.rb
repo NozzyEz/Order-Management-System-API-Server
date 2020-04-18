@@ -2,6 +2,9 @@ module Types
   class MutationType < Types::BaseObject
 
     # TODO: Create fields for organizations, orders and products 
+    # Registering and Signing In
+    field :register_user, mutation: Mutations::RegisterUser
+    field :sign_in, mutation: Mutations::SignIn
 
     # Creation mutations
     field :create_user, mutation: Mutations::CreateUser

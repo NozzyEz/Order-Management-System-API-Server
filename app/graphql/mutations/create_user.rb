@@ -14,11 +14,11 @@ class Mutations::CreateUser < Mutations::BaseMutation
 
     # The resolve method runs when the CreateUser mutation is queried, takes the arguments
     # and will then store these in the fields by invoking the new() method from the user model
-    def resolve(username:, email:, org_id:, first_name:, last_name:, password:, password_confirmation:)
+    def resolve(username:, email:, organization_id:, first_name:, last_name:, password:, password_confirmation:)
         user = User.new(
             username: username,
             email: email, 
-            org_id: org_id,
+            organization_id: organization_id,
             first_name: first_name, 
             last_name: last_name,
             password: password,

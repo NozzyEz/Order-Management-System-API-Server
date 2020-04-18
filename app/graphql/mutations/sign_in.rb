@@ -1,7 +1,7 @@
 module Mutations
-    class SignIn < Mutations::BaseMutation
-        argument :email, String, null: false
-        argument :password, String, null: false
+    class SignIn < BaseMutation
+        argument :email, String, required: true
+        argument :password, String, required: true
 
         type Types::AuthType
 
@@ -13,10 +13,10 @@ module Mutations
                     authentication_token = user.authentication_token
                     return OpenStruct.new(authentication_token: authentication_token)
                 else
-                    GraphQL::ExecutionError, 'Incorrect Email/Password'
+                    raise GraphQL::ExecutionError, 'Incorrect Email/Password'
                 end
             else
-                GraphQL::ExecutionError, 'User not registered'
+                raise GraphQL::ExecutionError, 'User not registered'
             end
         end
     end
