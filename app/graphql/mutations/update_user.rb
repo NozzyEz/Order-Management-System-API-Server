@@ -13,6 +13,7 @@ class Mutations::UpdateUser < Mutations::BaseMutation
 
     # resolve method
     def resolve(**attributes)
+        authorize_user
         user = User.find(attributes[:id])
         
         if user.update(attributes)
