@@ -27,36 +27,50 @@ module Types
 
     # Methods to fetch lists of each type
     def users
+      authorize_user
       User.all
     end
 
     def organizations
+      authorize_user
       Organization.all
     end
 
     def products
+      authorize_user
       Product.all
     end
 
     def orders
+      authorize_user
       Order.all
     end
 
     # fetch a specific items of a type by their id
     def user(id:)
+      authorize_user
       User.find(id)
     end
 
     def organization(id:)
+      authorize_user
       Organization.find(id)
     end
 
     def product(id:)
+      authorize_user
       Product.find(id)
     end
     
     def order(id:)
+      authorize_user
       Order.find(id)
+    end
+
+    def authorize_user
+      return true if context[:current_user].present?
+
+      raise GraphQL::ExecutionError, "User not signed in"
     end
   end
 end

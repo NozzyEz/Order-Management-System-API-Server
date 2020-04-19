@@ -11,6 +11,7 @@ class Mutations::UpdateOrganization < Mutations::BaseMutation
 
     # resolve method
     def resolve(**attributes)
+        authorize_user
         organization = Organization.find(attributes[:id])
         
         if organization.update(attributes)

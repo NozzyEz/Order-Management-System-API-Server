@@ -7,6 +7,7 @@ class Mutations::DestroyProduct < Mutations::BaseMutation
     type Types::ProductType
 
     def resolve(id:)
+        authorize_user
         Product.find(id).destroy
     end
 end

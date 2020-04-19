@@ -7,6 +7,7 @@ class Mutations::DestroyUser < Mutations::BaseMutation
     type Types::UserType
 
     def resolve(id:)
+        authorize_user
         User.find(id).destroy
     end
 end

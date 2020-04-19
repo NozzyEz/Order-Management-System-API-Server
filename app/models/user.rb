@@ -5,4 +5,6 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :token_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  before_save :reset_authentication_token
 end

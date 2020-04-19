@@ -16,6 +16,7 @@ class Mutations::UpdateOrder < Mutations::BaseMutation
 
     # resolve method
     def resolve(**attributes)
+        authorize_user
         order = Order.find(attributes[:id])
         
         if order.update(attributes)
