@@ -67,6 +67,8 @@ module Types
       Order.find(id)
     end
 
+    # Function to check is a user is signed in, we can call it within our other query functions 
+    # that are used by our queries 
     def authorize_user
       return true if context[:current_user].present?
 
