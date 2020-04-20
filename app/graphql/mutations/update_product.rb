@@ -11,7 +11,7 @@ class Mutations::UpdateProduct < Mutations::BaseMutation
     field :errors,     [String],                null: true
 
     def resolve(**attributes)
-        authorize_user
+        authenticate_user
         product = Product.find(attributes[:id])
 
         if product.update(attributes)

@@ -6,7 +6,7 @@ class Mutations::CreateOrganization < Mutations::BaseMutation
     field :errors,          [String],                   null: true
 
     def resolve(name:, verification_code:)
-        authorize_user
+        authenticate_user
         organization = Organization.new(
             name: name,
             verification_code: verification_code

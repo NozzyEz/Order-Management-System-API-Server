@@ -4,7 +4,7 @@ class Mutations::DestroyOrganization < Mutations::BaseMutation
     type Types::OrganizationType
 
     def resolve(id:)
-        authorize_user
+        authenticate_user
         Organization.find(id).destroy
     end
 end

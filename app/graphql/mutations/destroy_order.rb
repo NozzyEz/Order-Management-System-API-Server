@@ -4,7 +4,7 @@ class Mutations::DestroyOrder < Mutations::BaseMutation
     type Types::OrderType
 
     def resolve(id:)
-        authorize_user
+        authenticate_user
         Order.find(id).destroy
     end
 end

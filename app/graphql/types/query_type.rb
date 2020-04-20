@@ -27,49 +27,50 @@ module Types
 
     # Methods to fetch lists of each type
     def users
-      authorize_user
+      # binding.pry
+      authenticate_user
       User.all
     end
 
     def organizations
-      authorize_user
+      authenticate_user
       Organization.all
     end
 
     def products
-      authorize_user
+      authenticate_user
       Product.all
     end
 
     def orders
-      authorize_user
+      authenticate_user
       Order.all
     end
 
     # fetch a specific items of a type by their id
     def user(id:)
-      authorize_user
+      authenticate_user
       User.find(id)
     end
 
     def organization(id:)
-      authorize_user
+      authenticate_user
       Organization.find(id)
     end
 
     def product(id:)
-      authorize_user
+      authenticate_user
       Product.find(id)
     end
     
     def order(id:)
-      authorize_user
+      authenticate_user
       Order.find(id)
     end
 
     # Function to check is a user is signed in, we can call it within our other query functions 
     # that are used by our queries 
-    def authorize_user
+    def authenticate_user
       return true if context[:current_user].present?
 
       raise GraphQL::ExecutionError, "User not signed in"

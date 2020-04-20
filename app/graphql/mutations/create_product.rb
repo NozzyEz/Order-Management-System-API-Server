@@ -10,7 +10,7 @@ class Mutations::CreateProduct < Mutations::BaseMutation
     field :errors,     [String],                null: true
 
     def resolve(**attributes)
-        authorize_user
+        authenticate_user
         product = Product.new(attributes)
 
         if product.save

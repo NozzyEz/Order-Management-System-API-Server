@@ -11,7 +11,7 @@ class Mutations::CreateOrder < Mutations::BaseMutation
     field :errors,      [String],              null: true
 
     def resolve(**attributes)
-        authorize_user
+        authenticate_user
         order = Order.new(attributes)
 
         if order.save
