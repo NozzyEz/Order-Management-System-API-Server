@@ -38,6 +38,7 @@ module Types
       if current_user.role != "user"
         if current_user.role == "superuser"
           # show all users in same organization
+          User.where(organization_id: current_user.organization_id).find_each
         elsif current_user.role == "admin"
           User.all
         end
