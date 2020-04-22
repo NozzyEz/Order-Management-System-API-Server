@@ -93,11 +93,22 @@ module Types
         raise GraphQL::ExecutionError, "Permission Denied"
       end
     end
-
-    # fetch a specific items of a type by their id
+    
+    # fetch a specific user by their id
     def user(id:)
       authenticate_user
-      User.find(id)
+      if current_user.role == "admin"
+        User.find(id)
+      elsif current_user.role == "superuser"
+        # raise GraphQL::ExecutionError, "Permission Denied" unless current_user.organization.users.exists?(id: id)
+        # User.find(id)
+        
+        # Raise an error unless we can find a user with the id within our current user's organization's users
+        raise GraphQL::ExecutionError, "Permission Denied" unless user = current_user.organization.users.find_by(id: id)
+      else
+        raise GraphQL::ExecutionError, "Permission Denied"
+      end
+      
     end
 
     def organization(id:)
