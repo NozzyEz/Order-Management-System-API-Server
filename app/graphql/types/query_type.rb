@@ -40,7 +40,7 @@ module Types
       if current_user.role != "user"
         if current_user.role == "superuser"
           # show all users in same organization
-          User.where(organization_id: current_user.organization_id).find_each
+          User.where(organization_id: current_user.organization_id)
         elsif current_user.role == "admin"
           User.all
         end
@@ -55,7 +55,7 @@ module Types
       if current_user.role == "admin"
         Organization.all
       else
-        Organization.where(organization_id: current_user.organization_id).find_each
+        Organization.where(organization_id: current_user.organization_id)
       end
 
     end
@@ -66,7 +66,7 @@ module Types
       if current_user.role == "admin"
         Product.all
       else
-        Product.where(organization_id: current_user.organization_id).find_each
+        Product.where(organization_id: current_user.organization_id)
       end
     end
 
@@ -77,9 +77,9 @@ module Types
       if current_user.role == "admin"
         Order.all
       elsif current_user.role == "superuser"
-        Order.where(organization_id: current_user.organization_id).find_each
+        Order.where(organization_id: current_user.organization_id)
       else
-        Order.where(user_id: current_user.id).find_each
+        Order.where(user_id: current_user.id)
       end
 
     end
