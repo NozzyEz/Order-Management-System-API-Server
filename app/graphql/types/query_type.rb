@@ -34,7 +34,16 @@ module Types
     def users
       # binding.pry
       authenticate_user
-      User.all
+
+      if current_user.role != "user"
+        if current_user.role == "superuser"
+          # show all users in same organization
+        elsif current_user.role == "admin"
+          User.all
+        end
+      else
+        raise GraphQL::ExecutionError, "Permission denied"
+      end
     end
 
     def organizations
