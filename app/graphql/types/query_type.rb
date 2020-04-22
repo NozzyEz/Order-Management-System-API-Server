@@ -51,23 +51,47 @@ module Types
 
     def organizations
       authenticate_user
-      Organization.all
+      # Allow admin to see all organizations, otherwise only show organizations affiliated with user
+      if current_user.role == "admin"
+        Organization.all
+      else
+        Organization.where(organization_id: current_user.organization_id).find_each
+      end
+
     end
 
     def products
       authenticate_user
-      Product.all
+      # Allow admin to see all products, otherwise only show products affiliated with organization
+      if current_user.role == "admin"
+        Product.all
+      else
+        Product.where(organization_id: current_user.organization_id).find_each
+      end
     end
 
     def orders
       authenticate_user
-      Order.all
+      # Allow admin to see all orders. superuser can see orders in their organization, and user can 
+      # see their own orders only.
+      if current_user.role == "admin"
+        Order.all
+      elsif current_user.role == "superuser"
+        Order.where(organization_id: current_user.organization_id).find_each
+      else
+        Order.where(user_id: current_user.id).find_each
+      end
+
     end
 
     def images
       # binding.pry
       authenticate_user
-      Image.all
+      if current_user.role == "admin"
+        Image.all
+      else
+        raise GraphQL::ExecutionError, "Permission Denied"
+      end
     end
 
     # fetch a specific items of a type by their id
