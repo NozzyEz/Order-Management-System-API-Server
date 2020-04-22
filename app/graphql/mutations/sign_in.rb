@@ -10,6 +10,10 @@ module Mutations
 
             if user
                 if user.valid_password?(attributes[:password])
+                    # When user signs in, we want to save them to refresh their token and update 
+                    # when it was created at
+                    user.save
+
                     authentication_token = user.authentication_token
                     return OpenStruct.new(authentication_token: authentication_token)
                 else

@@ -8,6 +8,7 @@ module Types
     field :organizations, [Types::OrganizationType],  null: false
     field :products,      [Types::ProductType],       null: false
     field :orders,        [Types::OrderType],         null: false
+    field :images,        [Types::ImageType],         null: false
     
     field :user, Types::UserType, null: false do
       argument :id, ID, required: true
@@ -22,6 +23,10 @@ module Types
     end
     
     field :order, Types::OrderType, null: false do
+      argument :id, ID, required: true
+    end
+
+    field :image, Types::ImageType, null: false do
       argument :id, ID, required: true
     end
 
@@ -47,6 +52,12 @@ module Types
       Order.all
     end
 
+    def images
+      # binding.pry
+      authenticate_user
+      Image.all
+    end
+
     # fetch a specific items of a type by their id
     def user(id:)
       authenticate_user
@@ -66,6 +77,11 @@ module Types
     def order(id:)
       authenticate_user
       Order.find(id)
+    end
+    
+    def image(id:)
+      authenticate_user
+      Image.find(id)
     end
 
     # Function to check is a user is signed in, we can call it within our other query functions 

@@ -10,15 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_14_145700) do
+ActiveRecord::Schema.define(version: 2020_04_22_065200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "images", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.boolean "is_thumb", null: false
+    t.string "url", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_images_on_product_id"
+  end
+
   create_table "orders", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.bigint "user_id", null: false
-    # TODO Change 'Paid' to Boolean
     t.integer "paid"
     t.string "status"
     t.string "payment_type"
@@ -74,6 +82,7 @@ ActiveRecord::Schema.define(version: 2020_04_14_145700) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "images", "products"
   add_foreign_key "orders", "organizations"
   add_foreign_key "orders", "users"
   add_foreign_key "orders_products", "orders"
