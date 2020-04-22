@@ -9,7 +9,6 @@ class Mutations::UpdateOrder < Mutations::BaseMutation
     argument :status,           String,                  required: false
     argument :product_ids,      [ID],                    required: false
 
-
     # Fields
     field :order,           Types::OrderType,     null: true
     field :errors,          [String],             null: true
