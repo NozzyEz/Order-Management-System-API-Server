@@ -5,8 +5,7 @@ module Types
         field :organization,     Types::OrganizationType,         null: true
         field :user_id,          Integer,                         null: true
         field :user,             Types::UserType,                 null: true
-        field :paid,             Integer,                         null: true
-        field :cost,             Integer,                         null: true
+        field :paid,             Boolean,                         null: true
         field :payment_type,     String,                          null: true
         field :status,           String,                          null: true
         field :products,         [Types::ProductType],            null: true
