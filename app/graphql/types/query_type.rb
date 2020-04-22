@@ -35,6 +35,8 @@ module Types
       # binding.pry
       authenticate_user
 
+      # If current user is designated a super user, return all users in their organization, 
+      # otherwise if admin, return all - if neither is true, deny query
       if current_user.role != "user"
         if current_user.role == "superuser"
           # show all users in same organization
