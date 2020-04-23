@@ -11,23 +11,23 @@ module Types
     field :images,        [Types::ImageType],         null: false
     
     field :user, Types::UserType, null: false do
-      argument :id, ID, required: true
+      argument :id, Integer, required: true
     end
 
     field :organization, Types::OrganizationType, null: false do
-      argument :id, ID, required: true
+      argument :id, Integer, required: true
     end
 
     field :product, Types::ProductType, null: false do
-      argument :id, ID, required: true
+      argument :id, Integer, required: true
     end
     
     field :order, Types::OrderType, null: false do
-      argument :id, ID, required: true
+      argument :id, Integer, required: true
     end
 
     field :image, Types::ImageType, null: false do
-      argument :id, ID, required: true
+      argument :id, Integer, required: true
     end
 
     # Methods to fetch lists of each type
@@ -94,7 +94,8 @@ module Types
       end
     end
     
-    # fetch a specific user by their id
+    # fetch a specific user by their id if admin, if superuser check to see if queried user is in 
+    # the same organization, if that's the case, allow the query
     def user(id:)
       authenticate_user
       if current_user.role == "admin"
@@ -102,28 +103,43 @@ module Types
       elsif current_user.role == "superuser"
         # raise GraphQL::ExecutionError, "Permission Denied" unless current_user.organization.users.exists?(id: id)
         # User.find(id)
-        
+
         # Raise an error unless we can find a user with the id within our current user's organization's users
         raise GraphQL::ExecutionError, "Permission Denied" unless user = current_user.organization.users.find_by(id: id)
       else
         raise GraphQL::ExecutionError, "Permission Denied"
       end
-      
     end
 
     def organization(id:)
       authenticate_user
-      Organization.find(id)
+      if current_user.role == "admin"
+        Organization.find(id)
+      else
+        # binding.pry
+        raise GraphQL::ExecutionError, "Permission Denied" unless current_user.organization_id == id
+        current_user.organization
+      end
     end
 
     def product(id:)
       authenticate_user
-      Product.find(id)
+      if current_user.role == "admin"
+        Product.find(id)
+      else
+        raise GraphQL::ExecutionError, "Permission Denied" unless product = current_user.organization.products.find_by(id: id)
+      end
     end
     
     def order(id:)
       authenticate_user
-      Order.find(id)
+      if current_user.role == "admin"
+        Order.find(id)
+      elsif current_user.role == "superuser"
+        raise GraphQL::ExecutionError, "Permission Denied" unless order = current_user.organization.orders.find_by(id: id)
+      else
+        raise GraphQL::ExecutionError, "Permission Denied" unless order = current_user.orders.find_by(id: id)
+      end
     end
     
     def image(id:)
