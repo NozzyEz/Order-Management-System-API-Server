@@ -6,23 +6,28 @@ class Mutations::CreateOrganization < Mutations::BaseMutation
     field :errors,          [String],                   null: true
 
     def resolve(name:, verification_code:)
+        authenticate_user
+        
         #! This should only be allowed for Admin
-        # authenticate_user
-        organization = Organization.new(
-            name: name,
-            verification_code: verification_code
-        )
+        if current_user.role == "admin"
+            organization = Organization.new(
+                name: name,
+                verification_code: verification_code
+            )
 
-        if organization.save
-            {
-                organization: organization,
-                errors: []
-            }
+            if organization.save
+                {
+                    organization: organization,
+                    errors: []
+                }
+            else
+                {
+                    organization: nil,
+                    errors: organization.errors.full_messages
+                }
+            end
         else
-            {
-                organization: nil,
-                errors: organization.errors.full_messages
-            }
+            raise GraphQL::ExecutionError, "Permission Denied"
         end
     end
 end

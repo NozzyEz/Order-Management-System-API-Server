@@ -62,6 +62,7 @@ module Types
 
     def products
       authenticate_user
+      binding.pry
       # Allow admin to see all products, otherwise only show products affiliated with organization
       if current_user.role == "admin"
         Product.all

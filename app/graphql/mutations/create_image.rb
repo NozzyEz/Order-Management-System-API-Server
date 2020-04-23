@@ -9,18 +9,22 @@ module Mutations
 
         def resolve(**attributes)
             authenticate_user
-            image = Image.new(attributes)
+            if current_user.role == "admin" || current_user.role == "superuser"
+                image = Image.new(attributes)
 
-            if image.save
-                {
-                    image: image,
-                    errors: []
-                }
+                if image.save
+                    {
+                        image: image,
+                        errors: []
+                    }
+                else
+                    {
+                        image: nil,
+                        errors: image.errors.full_messages
+                    }
+                end
             else
-                {
-                    image: nil,
-                    errors: image.errors.full_messages
-                }
+                raise GraphQL::ExecutionError, "Permission Denied"
             end
         end
     end
