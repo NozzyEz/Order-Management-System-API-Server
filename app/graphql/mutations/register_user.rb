@@ -18,6 +18,7 @@ module Mutations
             user = User.create(input)
             
             if user.persisted?
+                context[:current_user] = user
                 {user: user, errors: []}
             else
                 {user: nil, errors: user.errors.full_messages}
