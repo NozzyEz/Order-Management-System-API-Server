@@ -13,8 +13,11 @@ module Mutations
         def resolve(**attributes)
             input = Hash[attributes[:registration_details].to_h.map{|k, v| [k.to_s.underscore.to_sym, v]}]
             # binding.pry
-            input[:organization_id] = Organization.find_by(verification_code: attributes[:verification_code])&.id
-            
+            input[:organization_id] = nil
+            raise GraphQL::ExecutionError, "Please use a valid verification code" unless 
+                org_id = Organization.find_by(verification_code: attributes[:verification_code])&.id
+            input[:organization_id] = org_id
+
             user = User.create(input)
             
             if user.persisted?
