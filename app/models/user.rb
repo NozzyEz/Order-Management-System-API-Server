@@ -7,4 +7,12 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   before_save :reset_authentication_token
+
+  ROLES = {
+    user: 'user',
+    superuser: 'superuser',
+    admin: 'admin'
+  }.freeze
+
+  enum role: ROLES
 end

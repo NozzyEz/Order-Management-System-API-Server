@@ -9,7 +9,7 @@ class Mutations::CreateOrganization < Mutations::BaseMutation
         authenticate_user
         
         #! This should only be allowed for Admin
-        if current_user.role == "admin"
+        if current_user.admin?
             organization = Organization.new(
                 name: name,
                 verification_code: verification_code

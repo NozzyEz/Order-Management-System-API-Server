@@ -17,12 +17,24 @@ module Types
     # curently signed in user's auth_token tha can be retrieved
     def authentication_token
       # binding.pry
-      if object.id != context[:current_user]&.id
+      if object.id != current_user.id
         raise GraphQL::UnauthorizedFieldError,
               "Unable to access authentication_token"
       end
 
       object.authentication_token
+    end
+
+    def orders
+      if current_user.admin? || current_user.superuser? || current_user.id == object.id
+        object.orders
+      end
+    end
+
+    def order_ids
+      if current_user.admin? || current_user.superuser? || current_user.id == object.id
+        object.order
+      end
     end
   end
 end

@@ -9,7 +9,7 @@ module Mutations
 
         def resolve(**attributes)
             authenticate_user
-            if current_user.role == "admin" || current_user.role == "superuser"
+            if current_user.admin? || current_user.superuser?
                 image = Image.new(attributes)
 
                 if image.save

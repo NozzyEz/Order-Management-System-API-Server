@@ -37,13 +37,11 @@ module Types
 
       # If current user is designated a super user, return all users in their organization, 
       # otherwise if admin, return all - if neither is true, deny query
-      if current_user.role != "user"
-        if current_user.role == "superuser"
-          # show all users in same organization
-          User.where(organization_id: current_user.organization_id)
-        elsif current_user.role == "admin"
-          User.all
-        end
+      if current_user.superuser?
+        # show all users in same organization
+        User.where(organization_id: current_user.organization_id)
+      elsif current_user.admin?
+        User.all
       else
         raise GraphQL::ExecutionError, "Permission denied"
       end
@@ -52,7 +50,7 @@ module Types
     def organizations
       authenticate_user
       # Allow admin to see all organizations, otherwise only show organizations affiliated with user
-      if current_user.role == "admin"
+      if current_user.admin?
         Organization.all
       else
         Organization.where(organization_id: current_user.organization_id)
@@ -64,7 +62,7 @@ module Types
       authenticate_user
       binding.pry
       # Allow admin to see all products, otherwise only show products affiliated with organization
-      if current_user.role == "admin"
+      if current_user.admin?
         Product.all
       else
         Product.where(organization_id: current_user.organization_id)
@@ -75,9 +73,9 @@ module Types
       authenticate_user
       # Allow admin to see all orders. superuser can see orders in their organization, and user can 
       # see their own orders only.
-      if current_user.role == "admin"
+      if current_user.admin?
         Order.all
-      elsif current_user.role == "superuser"
+      elsif current_user.superuser?
         Order.where(organization_id: current_user.organization_id)
       else
         Order.where(user_id: current_user.id)
@@ -88,7 +86,7 @@ module Types
     def images
       # binding.pry
       authenticate_user
-      if current_user.role == "admin"
+      if current_user.admin?
         Image.all
       else
         raise GraphQL::ExecutionError, "Permission Denied"
@@ -99,9 +97,9 @@ module Types
     # the same organization, if that's the case, allow the query
     def user(id:)
       authenticate_user
-      if current_user.role == "admin"
+      if current_user.admin?
         User.find(id)
-      elsif current_user.role == "superuser"
+      elsif current_user.superuser?
         # raise GraphQL::ExecutionError, "Permission Denied" unless current_user.organization.users.exists?(id: id)
         # User.find(id)
 
@@ -114,7 +112,7 @@ module Types
 
     def organization(id:)
       authenticate_user
-      if current_user.role == "admin"
+      if current_user.admin?
         Organization.find(id)
       else
         # binding.pry
@@ -125,7 +123,7 @@ module Types
 
     def product(id:)
       authenticate_user
-      if current_user.role == "admin"
+      if current_user.admin?
         Product.find(id)
       else
         raise GraphQL::ExecutionError, "Permission Denied" unless product = current_user.organization.products.find_by(id: id)
@@ -134,9 +132,9 @@ module Types
     
     def order(id:)
       authenticate_user
-      if current_user.role == "admin"
+      if current_user.admin?
         Order.find(id)
-      elsif current_user.role == "superuser"
+      elsif current_user.superuser?
         raise GraphQL::ExecutionError, "Permission Denied" unless order = current_user.organization.orders.find_by(id: id)
       else
         raise GraphQL::ExecutionError, "Permission Denied" unless order = current_user.orders.find_by(id: id)
@@ -151,7 +149,7 @@ module Types
     # Function to check is a user is signed in, we can call it within our other query functions 
     # that are used by our queries 
     def authenticate_user
-      return true if context[:current_user].present?
+      return true if current_user.present?
 
       raise GraphQL::ExecutionError, "User not signed in"
     end

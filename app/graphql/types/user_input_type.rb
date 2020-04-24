@@ -6,6 +6,6 @@ module Types
         argument :last_name,                String,     required: true
         argument :password,                 String,     required: true
         argument :password_confirmation,    String,     required: true
-        argument :organization_id,          Integer,    required: true
+        # argument :organization_id,          Integer,    required: true
     end
 end

@@ -12,14 +12,14 @@ class Mutations::CreateProduct < Mutations::BaseMutation
     def resolve(**attributes)
         authenticate_user
         # If user is admin and provides an organization id, allow creation of product
-        if current_user.role == "admin"
+        if current_user.admin?
             if attributes.has_key?(:organization_id)
                 product = Product.new(attributes)
             else
                 raise GraphQL::ExecutionError, "Organization_id needed"
             end
         # Otherwise if user is superuser, allow the ptoduct to be created in their organization
-        elsif current_user.role == "superuser"
+        elsif current_user.superuser?
             attributes[:organization_id] = current_user.organization_id
             product = Product.new(attributes)
         else

@@ -5,6 +5,10 @@ class Mutations::DestroyOrganization < Mutations::BaseMutation
 
     def resolve(id:)
         authenticate_user
-        Organization.find(id).destroy
+        if current_user.role == "admin"
+            Organization.find(id).destroy
+        else
+            raise GraphQL::ExecutionError, "Permission Denied"
+        end
     end
 end

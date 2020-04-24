@@ -8,6 +8,12 @@ class Mutations::DestroyUser < Mutations::BaseMutation
 
     def resolve(id:)
         authenticate_user
-        User.find(id).destroy
+        if current_user.role == "admin"
+            User.find(id).destroy
+        elsif current_user.role == "superuser" && current_user.organization.user_ids.include?(id)
+            User.find(id).destroy
+        else
+            raise GraphQL::ExecutionError, "Permission Denied"
+        end
     end
 end
