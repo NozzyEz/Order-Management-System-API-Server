@@ -4,7 +4,7 @@ module Mutations
         argument :is_thumb,     Boolean, required: true
         argument :url,          String,  required: true
 
-        field :image,  Types::ImageType, null: false
+        field :image,  Types::ImageType, null: true
         field :errors, [String],         null: true
 
         def resolve(**attributes)
@@ -13,15 +13,9 @@ module Mutations
                 image = Image.new(attributes)
 
                 if image.save
-                    {
-                        image: image,
-                        errors: []
-                    }
+                    {image: image, errors: []}
                 else
-                    {
-                        image: nil,
-                        errors: image.errors.full_messages
-                    }
+                    {image: nil, errors: image.errors.full_messages}
                 end
             else
                 raise GraphQL::ExecutionError, "Permission Denied"

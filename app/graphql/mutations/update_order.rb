@@ -1,6 +1,6 @@
 class Mutations::UpdateOrder < Mutations::BaseMutation
     # Arguments
-    argument :id,               ID,                      required: true
+    argument :id,               Integer,                 required: true
     argument :organization_id,  Integer,                 required: false
     argument :user_id,          Integer,                 required: false
     argument :paid,             Integer,                 required: false
@@ -16,8 +16,21 @@ class Mutations::UpdateOrder < Mutations::BaseMutation
     # resolve method
     def resolve(**attributes)
         authenticate_user
-        order = Order.find(attributes[:id])
         
+        # throw regular user out
+        raise GraphQL::ExecutionError, "Permission Denied" unless current_user.admin? || current_user.superuser?
+      
+        # don't let superuser touch order's organization
+        attributes.delete(:organization_id) unless current_user.admin?
+      
+        # find order just once
+        order = Order.find(attributes[:id])
+      
+        # throw superuser out if they're trying to edit order that doesn't belong to their organization
+        if current_user.superuser? && order.organization_id != current_user.organization_id
+          raise GraphQL::ExecutionError, "Permission Denied"
+        end
+      
         if order.update(attributes)
             {order: order, errors: []}
         else
