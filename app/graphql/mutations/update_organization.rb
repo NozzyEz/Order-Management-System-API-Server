@@ -12,7 +12,13 @@ class Mutations::UpdateOrganization < Mutations::BaseMutation
     # resolve method
     def resolve(**attributes)
         authenticate_user
+
+        raise GraphQL::ExecutionError, "Permission denied" unless current_user.admin? || current_user.superuser?
         organization = Organization.find(attributes[:id])
+
+        if current_user.superuser? && current_user.organization_id != organization.id
+            raise GraphQL::ExecutionError, "Can only change own organization"
+        end
         
         if organization.update(attributes)
             {organization: organization, errors: []}
