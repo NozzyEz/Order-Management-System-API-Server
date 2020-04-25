@@ -22,6 +22,7 @@ class Mutations::UpdateUser < Mutations::BaseMutation
         end
         
         if user.update(attributes)
+            # TODO Check if user needs to be fetched from context
             {user: user, errors: []}
         else
             {user: nil, errors: user.errors.full_messages}
