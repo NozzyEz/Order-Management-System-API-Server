@@ -100,9 +100,6 @@ module Types
       if current_user.admin?
         User.find(id)
       elsif current_user.superuser?
-        # raise GraphQL::ExecutionError, "Permission Denied" unless current_user.organization.users.exists?(id: id)
-        # User.find(id)
-
         # Raise an error unless we can find a user with the id within our current user's organization's users
         raise GraphQL::ExecutionError, "Permission Denied" unless user = current_user.organization.users.find_by(id: id)
       else
