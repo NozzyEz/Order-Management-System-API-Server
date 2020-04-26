@@ -26,6 +26,8 @@ module Types
       argument :id, Integer, required: true
     end
 
+    field :filter_orders, resolver: Resolvers::OrdersSearch
+
     field :image, Types::ImageType, null: false do
       argument :id, Integer, required: true
     end
