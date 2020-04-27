@@ -10,6 +10,7 @@
     organization = Organization.new
     organization.name = "NozzyCore"
     organization.verification_code = "totally_legit"
+    organization.save
 end
 
 1.times do
