@@ -6,9 +6,8 @@ class Mutations::CreateOrganization < Mutations::BaseMutation
     field :errors,          [String],                   null: true
 
     def resolve(name:, verification_code:)
-        # authenticate_user
+        authenticate_user
         
-        current_user = context[:current_user]
         #! This should only be allowed for Admin
         if current_user.admin?
             organization = Organization.new(

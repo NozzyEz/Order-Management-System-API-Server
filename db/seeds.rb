@@ -6,17 +6,21 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-5.times do
+1.times do
+    organization = Organization.new
+    organization.name = "NozzyCore"
+    organization.verification_code = "totally_legit"
+end
+
+1.times do
     user = User.new
-    user.username = Faker::Internet.username 
-    user.first_name = Faker::Name.first_name 
-    user.last_name = Faker::Name.last_name 
-    user.email = Faker::Internet.email
+    user.username = "Admin"
+    user.first_name = "Mark"
+    user.last_name = "Sahlgreen"
+    user.email = "mark@nozzy.org"
     user.password = 'valid_password'
     user.password_confirmation = 'valid_password'
+    user.role = "admin"
     user.save
-    5.times do
-        user.posts.create(title: Faker::Lorem.sentence(word_count: 3), 
-        body: Faker::Lorem.paragraph(sentence_count: 3))
-    end
+    
 end
