@@ -7,7 +7,7 @@ module Types
     field :users,         [Types::UserType],          null: false
     field :organizations, [Types::OrganizationType],  null: false
     field :products,      [Types::ProductType],       null: false
-    field :orders,        [Types::OrderType],         null: false
+    field :orders,        [Types::OrderType],         null: false, resolver: ::Resolvers::OrdersResolver, guard: -> (_obj, _someshit, ctx) { ctx[:current_user].nil? }
     field :images,        [Types::ImageType],         null: false
     
     field :user, Types::UserType, null: false do
@@ -69,19 +69,19 @@ module Types
       end
     end
 
-    def orders
-      authenticate_user
-      # Allow admin to see all orders. superuser can see orders in their organization, and user can 
-      # see their own orders only.
-      if current_user.admin?
-        Order.all
-      elsif current_user.superuser?
-        Order.where(organization_id: current_user.organization_id)
-      else
-        Order.where(user_id: current_user.id)
-      end
+    # def orders
+    #   authenticate_user
+    #   # Allow admin to see all orders. superuser can see orders in their organization, and user can 
+    #   # see their own orders only.
+    #   if current_user.admin?
+    #     Order.all
+    #   elsif current_user.superuser?
+    #     Order.where(organization_id: current_user.organization_id)
+    #   else
+    #     Order.where(user_id: current_user.id)
+    #   end
 
-    end
+    # end
 
     def images
       # binding.pry
@@ -100,9 +100,6 @@ module Types
       if current_user.admin?
         User.find(id)
       elsif current_user.superuser?
-        # raise GraphQL::ExecutionError, "Permission Denied" unless current_user.organization.users.exists?(id: id)
-        # User.find(id)
-
         # Raise an error unless we can find a user with the id within our current user's organization's users
         raise GraphQL::ExecutionError, "Permission Denied" unless user = current_user.organization.users.find_by(id: id)
       else

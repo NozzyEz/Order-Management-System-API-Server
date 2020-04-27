@@ -13,6 +13,8 @@ gem 'puma', '~> 4.1'
 # Graphql API
 gem 'graphql', '~> 1.10', '>= 1.10.5'
 gem 'graphql-errors', '~> 0.4.0'
+gem 'search_object_graphql', '~> 0.3.1'
+gem 'graphql-guard'
 
 # Use this gem as a replacemend for iRB, we can make it stop code running and get an interactive 
 # console at the point we want by adding 'binding.pry' at the line we want to interrupt inside of
