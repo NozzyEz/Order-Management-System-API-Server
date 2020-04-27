@@ -80,6 +80,8 @@ test:
 #
 production:
   <<: *default
-  database: graphql_devise_production
-  username: graphql_demo
-  password: <%= ENV['GRAPHQL_DEMO_DATABASE_PASSWORD'] %>
+  host: ec2-52-7-39-178.compute-1.amazonaws.com
+  database: d3c0te2vfl123s
+  port: 5432
+  username: oyuliusbuthsqu
+  password: 4c531958a056831a9027b72a277dd7fb866c6ced304d1e2f0a903802a46425f5
