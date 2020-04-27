@@ -16,6 +16,7 @@ end
 1.times do
     user = User.new
     user.username = "Admin"
+    user.organization_id = 1
     user.first_name = "Mark"
     user.last_name = "Sahlgreen"
     user.email = "mark@nozzy.org"
