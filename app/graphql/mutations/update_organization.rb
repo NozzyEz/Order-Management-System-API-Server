@@ -20,6 +20,8 @@ class Mutations::UpdateOrganization < Mutations::BaseMutation
             raise GraphQL::ExecutionError, "Can only change own organization"
         end
         
+        raise GraphQL::ExecutionError, "verification code must be unique" unless Organization.where(verification_code: verification_code).nil?
+        
         if organization.update(attributes)
             {organization: organization, errors: []}
         else
