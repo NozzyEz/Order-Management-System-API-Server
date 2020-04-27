@@ -7,6 +7,7 @@ class Mutations::CreateOrganization < Mutations::BaseMutation
 
     def resolve(name:, verification_code:)
         # authenticate_user
+        
         current_user = context[:current_user]
         #! This should only be allowed for Admin
         if current_user.admin?
