@@ -26,6 +26,7 @@ class Mutations::UpdateUser < Mutations::BaseMutation
 
         if !current_user.admin?
             attributes[:role] = user.role
+        end
         
         if user.update(attributes)
             # TODO Check if user needs to be fetched from context
