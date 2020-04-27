@@ -5,6 +5,7 @@ class Mutations::UpdateUser < Mutations::BaseMutation
     argument :first_name,       String,     required: false
     argument :last_name,        String,     required: false
     argument :organization_id,  Integer,    required: false
+    argument :role              String,     required: false
 
     field :user,    Types::UserType,    null: true
     field :errors,  [String],           null: true
@@ -23,6 +24,8 @@ class Mutations::UpdateUser < Mutations::BaseMutation
             raise GraphQL::ExecutionError, "Not allowed to update users outside of own organization"
         end
 
+        if !current_user.admin?
+            attributes[:role] = user.role
         
         if user.update(attributes)
             # TODO Check if user needs to be fetched from context
