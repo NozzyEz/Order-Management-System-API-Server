@@ -1,8 +1,8 @@
 class Mutations::UpdateUser < Mutations::BaseMutation
     argument :id,                       Integer,    required: true
     argument :username,                 String,     required: false
-    argument :password                  String,     required: false
-    argument :password_confirmation     String,     required: false
+    argument :password,                 String,     required: false
+    argument :password_confirmation,    String,     required: false
     argument :email,                    String,     required: false
     argument :first_name,               String,     required: false
     argument :last_name,                String,     required: false
