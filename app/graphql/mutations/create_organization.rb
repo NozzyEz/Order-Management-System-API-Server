@@ -9,7 +9,6 @@ class Mutations::CreateOrganization < Mutations::BaseMutation
         authenticate_user
         #! This should only be allowed for Admin
         if current_user.admin?
-            raise GraphQL::ExecutionError, "verification code must be unique" unless Organization.where(verification_code: verification_code).nil?
             organization = Organization.new(
                 name: name,
                 verification_code: verification_code

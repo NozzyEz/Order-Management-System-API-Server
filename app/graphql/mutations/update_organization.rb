@@ -19,9 +19,7 @@ class Mutations::UpdateOrganization < Mutations::BaseMutation
         if current_user.superuser? && current_user.organization_id != organization.id
             raise GraphQL::ExecutionError, "Can only change own organization"
         end
-        
-        raise GraphQL::ExecutionError, "verification code must be unique" unless Organization.where(verification_code: verification_code).nil?
-        
+
         if organization.update(attributes)
             {organization: organization, errors: []}
         else
