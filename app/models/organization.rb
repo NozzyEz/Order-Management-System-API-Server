@@ -4,5 +4,5 @@ class Organization < ApplicationRecord
     has_many :orders
     has_many :images, through: :products
 
-    validates :verification_codem uniqueness: true
+    validates :verification_code, uniqueness: true
 end
