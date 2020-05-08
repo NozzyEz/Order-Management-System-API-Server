@@ -1,10 +1,10 @@
 class Mutations::CreateProduct < Mutations::BaseMutation
-    argument :name,                 String,     required: true
-    argument :organization_id,      Integer,    required: false
-    argument :description,          String,     required: true
-    argument :inventory,            Integer,    required: false
-    argument :images,               String,     required: false
-    argument :price,                Float,      required: true
+    argument :name,                 String,                 required: true
+    argument :organization_id,      Integer,                required: false
+    argument :description,          String,                 required: true
+    argument :inventory,            Integer,                required: false
+    argument :image_ids,            [ID],                   required: false
+    argument :price,                Float,                  required: true
 
     field :product,    Types::ProductType,      null: false
     field :errors,     [String],                null: true

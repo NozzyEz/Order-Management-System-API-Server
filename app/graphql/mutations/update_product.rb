@@ -5,7 +5,7 @@ class Mutations::UpdateProduct < Mutations::BaseMutation
     argument :description,          String,     required: false
     argument :price,                Float,      required: false
     argument :inventory,            Integer,    required: false
-    argument :images,               String,     required: false
+    argument :image_ids,            [ID],       required: false
 
     field :product,    Types::ProductType,      null: false
     field :errors,     [String],                null: true

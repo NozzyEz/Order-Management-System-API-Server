@@ -10,7 +10,7 @@ module Types
     field :orders,        [Types::OrderType],         null: false, resolver: ::Resolvers::OrdersResolver, guard: -> (_obj, _someshit, ctx) { ctx[:current_user].nil? }
     field :images,        [Types::ImageType],         null: false
     
-    field :user, Types::UserType, null: false do
+    field :user, Types::UserType, null: true do
       argument :id, Integer, required: true
     end
 
@@ -101,6 +101,7 @@ module Types
       elsif current_user.superuser?
         # Raise an error unless we can find a user with the id within our current user's organization's users
         raise GraphQL::ExecutionError, "Permission Denied" unless user = current_user.organization.users.find_by(id: id)
+        User.find(id)
       else
         raise GraphQL::ExecutionError, "Permission Denied"
       end
@@ -123,6 +124,7 @@ module Types
         Product.find(id)
       else
         raise GraphQL::ExecutionError, "Permission Denied" unless product = current_user.organization.products.find_by(id: id)
+        Product.find(id)
       end
     end
     
