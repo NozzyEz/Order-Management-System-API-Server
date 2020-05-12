@@ -16,6 +16,7 @@ module Mutations
 
                     authentication_token = user.authentication_token
                     return OpenStruct.new(authentication_token: authentication_token)
+                    return OpenStruct.new(user: user)
                 else
                     raise GraphQL::ExecutionError, 'Incorrect Email/Password'
                 end
