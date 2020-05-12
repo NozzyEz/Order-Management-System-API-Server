@@ -3,7 +3,6 @@ module Mutations
         argument :email, String, required: true
         argument :password, String, required: true
 
-        type Types::UserType
         type Types::AuthType
 
         def resolve(**attributes)
@@ -16,13 +15,14 @@ module Mutations
                     user.save
 
                     authentication_token = user.authentication_token
-                    return OpenStruct.new(authentication_token: authentication_token)
+                    return { authentication_token: authentication_token, user: user }
                 else
                     raise GraphQL::ExecutionError, 'Incorrect Email/Password'
                 end
             else
                 raise GraphQL::ExecutionError, 'User not registered'
             end
+
         end
     end
 end
