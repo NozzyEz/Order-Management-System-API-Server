@@ -3,6 +3,7 @@ module Mutations
         argument :email, String, required: true
         argument :password, String, required: true
 
+        type Types::UserType
         type Types::AuthType
 
         def resolve(**attributes)
