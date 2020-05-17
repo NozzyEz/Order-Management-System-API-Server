@@ -32,7 +32,7 @@ module Types
             
         def user
             if current_user.admin? || current_user.superuser? || current_user.user_id == object.user_id
-                    object.user_id
+                    object.user
             end
         end
     end
