@@ -11,30 +11,5 @@ module Types
         field :products,         [Types::ProductType],            null: true
         field :created_at,       GraphQL::Types::ISO8601DateTime, null: false 
         field :updated_at,       GraphQL::Types::ISO8601DateTime, null: false 
-
-        # def organization_id
-        #     if current_user.admin? || current_user.superuser? || current_user.organization_id == object.organization_id
-        #         object.organization_id
-        #     end
-        # end
-            
-        # def organization
-        #     if current_user.admin? || current_user.superuser? || current_user.organization_id == object.organization_id
-        #             object.organization
-        #     end
-        # end
-
-        # def user_id
-        #     binding.pry
-        #     if current_user.admin? || current_user.superuser? || current_user.user_id == object.user_id
-        #         object.user_id
-        #     end
-        # end
-            
-        # def user
-        #     if current_user.admin? || current_user.superuser? || current_user.user_id == object.user_id
-        #             object.user
-        #     end
-        # end
     end
 end

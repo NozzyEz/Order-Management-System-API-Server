@@ -24,6 +24,7 @@ class Mutations::CreateOrder < Mutations::BaseMutation
         # or if super user, only use current_user's organization_id as argument
         elsif current_user.superuser?
             attributes[:organization_id] = current_user.organization_id
+            raise GraphQL::ExecutionError, "user_id has to be provided" unless attributes.has_key?(:user_id)
             order = Order.new(attributes)
         # or if user, only allow to use current_user.id and current_user.organization_id
         else
