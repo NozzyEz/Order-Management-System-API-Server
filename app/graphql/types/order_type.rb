@@ -9,7 +9,7 @@ module Types
         field :payment_type,     String,                          null: true
         field :status,           String,                          null: true
         field :products,         [Types::ProductType],            null: true
-        field :created_at,       GraphQL::Types::ISO8601DateTime, null: false 
-        field :updated_at,       GraphQL::Types::ISO8601DateTime, null: false 
+        field :created_at,       GraphQL::Types::ISO8601DateTime, null: true 
+        field :updated_at,       GraphQL::Types::ISO8601DateTime, null: true 
     end
 end

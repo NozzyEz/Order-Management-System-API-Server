@@ -134,8 +134,10 @@ module Types
         Order.find(id)
       elsif current_user.superuser?
         raise GraphQL::ExecutionError, "Permission Denied" unless order = current_user.organization.orders.find_by(id: id)
+        Order.find(id)
       else
         raise GraphQL::ExecutionError, "Permission Denied" unless order = current_user.orders.find_by(id: id)
+        Order.find(id)
       end
     end
     
