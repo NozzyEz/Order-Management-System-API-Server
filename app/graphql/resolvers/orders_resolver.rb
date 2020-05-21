@@ -1,6 +1,7 @@
 module Resolvers
   class OrdersResolver < GraphQL::Schema::Resolver
     type [Types::OrderType], null: false
+    # type [Types::OrderType].connection_type, null: false
 
     argument :created_at, GraphQL::Types::ISO8601Date, required: false
 
@@ -15,7 +16,7 @@ module Resolvers
             elsif current_user.superuser?
                 Order.where(organization_id: current_user.organization_id) # pretend we scoped
             else
-                current_user.orders
+                return current_user.orders.order(created_at: :desc)
             end
 
       

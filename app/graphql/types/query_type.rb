@@ -68,20 +68,6 @@ module Types
       end
     end
 
-    # def orders
-    #   authenticate_user
-    #   # Allow admin to see all orders. superuser can see orders in their organization, and user can 
-    #   # see their own orders only.
-    #   if current_user.admin?
-    #     Order.all
-    #   elsif current_user.superuser?
-    #     Order.where(organization_id: current_user.organization_id)
-    #   else
-    #     Order.where(user_id: current_user.id)
-    #   end
-
-    # end
-
     def images
       # binding.pry
       authenticate_user
