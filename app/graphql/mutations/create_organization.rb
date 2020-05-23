@@ -15,15 +15,9 @@ class Mutations::CreateOrganization < Mutations::BaseMutation
             )
 
             if organization.save
-                {
-                    organization: organization,
-                    errors: []
-                }
+                {organization: organization,errors: []}
             else
-                {
-                    organization: nil,
-                    errors: organization.errors.full_messages
-                }
+                raise GraphQL::ExecutionError, organization.errors.full_messages.join(", ")
             end
         else
             raise GraphQL::ExecutionError, "Permission Denied"

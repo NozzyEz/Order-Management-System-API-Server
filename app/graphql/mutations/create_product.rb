@@ -28,15 +28,9 @@ class Mutations::CreateProduct < Mutations::BaseMutation
 
 
         if product.save
-            {
-                product: product,
-                errors: []
-            }
+            {product: product, errors: []}
         else
-            {
-                product: nil,
-                errors: product.errors.full_messages
-            }
+            raise GraphQL::ExecutionError, product.errors.full_messages.join(", ")
         end
     end
 end

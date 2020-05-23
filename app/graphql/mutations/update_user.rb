@@ -34,7 +34,7 @@ class Mutations::UpdateUser < Mutations::BaseMutation
             # TODO Check if user needs to be fetched from context
             {user: user, errors: []}
         else
-            {user: nil, errors: user.errors.full_messages}
+            raise GraphQL::ExecutionError, user.errors.full_messages.join(", ")
         end
     end
 end

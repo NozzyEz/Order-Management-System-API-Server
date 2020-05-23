@@ -18,8 +18,6 @@ module Mutations
             raise GraphQL::ExecutionError, "Please use a valid verification code" unless 
                 org_id = Organization.find_by(verification_code: attributes[:verification_code])&.id
             input[:organization_id] = org_id
-
-            raise GraphQL::ExecutionError, "Please make sure the passwords match" unless input[:password] == input[:password_confirmation]
             
             # TODO Fix email verification
             # raise GraphQL::ExecutionError, "The passwords doesn't match" unless input[:email] =~ URI::MailTo::EMAIL_REGEXP
@@ -31,7 +29,7 @@ module Mutations
                 context[:current_user] = user
                 {user: user, errors: []}
             else
-                {user: nil, errors: user.errors.full_messages}
+                raise GraphQL::ExecutionError, user.errors.full_messages.join(", ")
             end
         end
     end

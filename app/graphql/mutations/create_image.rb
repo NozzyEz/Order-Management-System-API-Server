@@ -15,7 +15,7 @@ module Mutations
                 if image.save
                     {image: image, errors: []}
                 else
-                    {image: nil, errors: image.errors.full_messages}
+                    raise GraphQL::ExecutionError, image.errors.full_messages.join(", ")
                 end
             else
                 raise GraphQL::ExecutionError, "Permission Denied"

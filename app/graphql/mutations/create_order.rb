@@ -33,15 +33,9 @@ class Mutations::CreateOrder < Mutations::BaseMutation
             order = Order.new(attributes)
         end
         if order.save
-            {
-                order: order,
-                errors: []
-            }
+            {order: order,errors: []}
         else
-            {
-                order: nil,
-                errors: order.errors.full_messages
-            }
+            raise GraphQL::ExecutionError, order.errors.full_messages.join(", ")
         end
     end
 end

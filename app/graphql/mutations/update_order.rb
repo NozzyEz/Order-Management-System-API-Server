@@ -34,7 +34,7 @@ class Mutations::UpdateOrder < Mutations::BaseMutation
         if order.update(attributes)
             {order: order, errors: []}
         else
-            {order: nil, errors: order.errors.full_messages}
+            raise GraphQL::ExecutionError, order.errors.full_messages.join(", ")
         end
     end
 end

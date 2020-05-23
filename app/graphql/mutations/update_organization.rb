@@ -23,7 +23,7 @@ class Mutations::UpdateOrganization < Mutations::BaseMutation
         if organization.update(attributes)
             {organization: organization, errors: []}
         else
-            {organization: nil, errors: organization.errors.full_messages}
+            raise GraphQL::ExecutionError, organization.errors.full_messages.join(", ")
         end
     end
 end
