@@ -20,7 +20,7 @@ module Resolvers
             end
 
       
-      scope = scope.where(created_at: created_at.beginning_of_day..created_at.end_of_day) if created_at
+      scope = scope.where(created_at: created_at.utc.beginning_of_day..created_at.utc.end_of_day) if created_at
 
       scope
     end
