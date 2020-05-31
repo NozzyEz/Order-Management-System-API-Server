@@ -3,7 +3,7 @@ class Mutations::UpdateOrder < Mutations::BaseMutation
     argument :id,               Integer,                 required: true
     argument :organization_id,  Integer,                 required: false
     argument :user_id,          Integer,                 required: false
-    argument :paid,             Integer,                 required: false
+    argument :paid,             Boolean,                 required: false
     argument :cost,             Integer,                 required: false
     argument :payment_type,     String,                  required: false
     argument :status,           String,                  required: false
