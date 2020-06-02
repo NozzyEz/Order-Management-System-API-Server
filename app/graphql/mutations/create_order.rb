@@ -4,7 +4,7 @@ class Mutations::CreateOrder < Mutations::BaseMutation
     argument :paid,             Boolean,    required: false
     argument :payment_type,     String,     required: true
     argument :status,           String,     required: false
-    argument :product_ids,      [Integer],       required: true
+    argument :product_ids,      [Integer],  required: true
 
 
     field :order,       Types::OrderType,      null: false

@@ -10,6 +10,7 @@ module Types
         field :updated_at,       GraphQL::Types::ISO8601DateTime, null: false
 
         def verification_code
+            raise GraphQL::ExecutionError, "cannot retrieve Verification Code on sign in" unless !current_user.nil?
             if current_user.admin? || current_user.superuser? || current_user.organization_id == object.id
                 object.verification_code
             end
